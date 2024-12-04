@@ -49,4 +49,10 @@ public class Day4Part2 {
 
     }
 
+//int[][] dir = { {-1, 1}, {1, -1}, {-1, 1}, {1, 1} };
+//StringBuilder charHolder = new StringBuilder();
+//                    for (int[] d : dir) {
+//        charHolder.append(grid[d[0]][d[1]]);
+//                    }
+
 
