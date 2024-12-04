@@ -37,7 +37,6 @@ public class Day4RF {
 
     public static List<String> GetStringArray(char[][] grid, int i, int j){
         List<String> stringArray = new ArrayList<>();
-
         int[][] directions = {
                 {1,0}, {-1, 0} ,
                 {0, 1}, {0, -1},
@@ -46,20 +45,14 @@ public class Day4RF {
         };
 
         for (int[] direction : directions) {
-            int dirX = direction[0];
-            int dirY = direction[1]; // indexing the directions array
-
             StringBuilder charHolder = new StringBuilder();
-
             for (int step = 1; step <= 3; step++) {
-                int x = i + step * dirX;
-                int y = j + step * dirY;
+                int x = i + step * direction[0];
+                int y = j + step * direction[1];
                 charHolder.append(grid[x][y]);
             }
             stringArray.add(charHolder.toString());
-
         }
-
         return stringArray;
     }
 
@@ -68,16 +61,13 @@ public class Day4RF {
         int count = 0;
         for (int i = 0; i < 150; i++) {
             for (int j = 0; j < 150; j++) {
-
                 if (grid[i][j] == 'X') {
                     List<String> getIndexWords = GetStringArray(grid, i, j);
-
                     for (String word : getIndexWords) {
                         if (word.equals("MAS")) {
                             count++;
                         }
                     }
-
                 }
             }
         }
