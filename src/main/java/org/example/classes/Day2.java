@@ -1,39 +1,20 @@
 package org.example.classes;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.example.utils.FileManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Day2 {
-    public static List<String> GetLevels(){
-        List<String> returnList = new ArrayList<>();
-        try {
-            File myObj = new File("src/main/java/org/example/levels");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String nextLine = myReader.nextLine();
-                returnList.add(nextLine);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error");
-            System.out.println(e);
-        }
-        return returnList;
-    }
 
     public static boolean CheckLevels(List<Integer> listOfLevels, int recursion) {
         if (recursion > 1) {
             return false;
         }
 
-        int first = listOfLevels.getFirst();
-        int second = listOfLevels.getLast();
         List<Integer> listofDiff = new ArrayList<Integer>();
-        if (first < second) {
+        if (listOfLevels.getFirst() < listOfLevels.getLast()) {
             listofDiff.add(-1);
             listofDiff.add(-2);
             listofDiff.add(-3);
@@ -58,7 +39,7 @@ public class Day2 {
 
     public static int CheckReviews() {
         int count = 0;
-        List<String> myLevels = GetLevels();
+        List<String> myLevels = FileManager.ReadFile("src/main/java/org/example/levels");
         for (int i = 0; i < myLevels.size(); i++) {
             List<Integer> listOfLevels = Arrays.stream(myLevels.get(i).split(" "))
                     .map(Integer :: parseInt).collect(Collectors.toList());

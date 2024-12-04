@@ -1,5 +1,7 @@
 package org.example.classes;
 
+import org.example.utils.FileManager;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,24 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Day1 {
-    public static List<String> ReadFile(){
-        List<String> returnList = new ArrayList<>();
-        try {
-            File myObj = new File("src/main/java/org/example/lists");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String nextLine = myReader.nextLine();
-                returnList.add(nextLine);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error");
-            System.out.println(e);
-        }
-        return returnList;
-    }
 
     public static List<Integer> GetLists(int oddOrEven){
-        List<String> theLists = ReadFile();
+        List<String> theLists = FileManager.ReadFile("src/main/java/org/example/lists");
         List<Integer> returnList = new ArrayList<>();
         for (String line : theLists ){
             String hold = line.split("   ")[oddOrEven];

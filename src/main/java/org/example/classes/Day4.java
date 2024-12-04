@@ -1,50 +1,29 @@
 package org.example.classes;
-
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.example.utils.FileManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day4 {
 
-    public static List<String> GetLevels(){
-        List<String> returnList = new ArrayList<>();
-        try {
-            File myObj = new File("src/main/java/org/example/wordsearch");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String nextLine = myReader.nextLine();
-                returnList.add(nextLine);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error");
-            System.out.println(e);
-        }
-        return returnList;
-    }
-
-
-
-    public static long countOccur(String line, String match) {
+    public static long CountOccur(String line, String match) {
         Pattern pattern = Pattern.compile(match);
         Matcher matches = pattern.matcher(line);
         return matches.results().count();
     }
 
-    public static int CheckHorizontal(List<String> listOf){
+    public static int AssessString(List<String> listOf){
         int total = 0;
         for (int i = 0; i < listOf.size(); i++) {
-            total += countOccur(listOf.get(i), "XMAS");
-            total += countOccur(listOf.get(i), "SAMX");
+            total += CountOccur(listOf.get(i), "XMAS");
+            total += CountOccur(listOf.get(i), "SAMX");
         }
         return total;
     }
 
-    public static int CheckVertical(){
-        List<String> horList = GetLevels();
+    public static int GetVertical(){
+        List<String> horList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
         List<String> verList = new ArrayList<>();
         for (int i = 0; i < horList.get(0).length(); i++) {
             String newVertical = "";
@@ -53,11 +32,11 @@ public class Day4 {
             }
             verList.add(newVertical);
         }
-        return CheckHorizontal(verList);
+        return AssessString(verList);
     }
 
-    public static int GetDiagonal(){
-        List<String> horList = GetLevels();
+    public static int GetDiagonalL2R(){
+        List<String> horList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
         List<String> dia1 = new ArrayList<>();
         for (int i = 0; i < horList.get(0).length(); i++) {
             String newVertical = "";
@@ -84,11 +63,11 @@ public class Day4 {
             }
             dia1.add(newVertical);
         }
-        return CheckHorizontal(dia1);
+        return AssessString(dia1);
     }
 
-    public static int GetDiagonal2(){
-        List<String> horList = GetLevels();
+    public static int GetDiagonalR2L(){
+        List<String> horList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
         List<String> dia1 = new ArrayList<>();
         for (int i = horList.get(0).length() -1; i >= 0; i--) {
             String newVertical = "";
@@ -115,15 +94,15 @@ public class Day4 {
             }
             dia1.add(newVertical);
         }
-        return CheckHorizontal(dia1);
+        return AssessString(dia1);
     }
 
 
     public static int TotalCal(){
         int total = 0;
-        total += CheckHorizontal(GetLevels());
-        total += CheckVertical();
-        total += GetDiagonal() + GetDiagonal2();
+        total += AssessString(FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch"));
+        total += GetVertical();
+        total += GetDiagonalL2R() + GetDiagonalR2L();
         return total;
     }
 
