@@ -1,6 +1,8 @@
 package org.example;
 import java.io.CharArrayWriter;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.*;
 
 import java.io.File;
@@ -10,13 +12,12 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
 public class Main {
 
     public static List<String> GetLevels(){
         List<String> returnList = new ArrayList<>();
         try {
-            File myObj = new File("src/main/java/org/example/levels");
+            File myObj = new File("src/main/java/org/example/wordsearch");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String nextLine = myReader.nextLine();
@@ -29,52 +30,86 @@ public class Main {
         return returnList;
     }
 
-    public static boolean CheckLevels(List<Integer> listOfLevels, int recursion) {
-        if (recursion > 1) {
-            return false;
-        }
-
-        int first = listOfLevels.getFirst();
-        int second = listOfLevels.getLast();
-        List<Integer> listofDiff = new ArrayList<Integer>();
-        if (first < second) {
-            listofDiff.add(-1);
-            listofDiff.add(-2);
-            listofDiff.add(-3);
-        } else {
-            listofDiff.add(1);
-            listofDiff.add(2);
-            listofDiff.add(3);
-        }
-
-        for (int i = 0; i < (listOfLevels.size() - 1); i++ ) {
-            if ( ! listofDiff.contains( listOfLevels.get(i) - listOfLevels.get(i + 1) )) {
-                List<Integer> firstIndex = new ArrayList<>(listOfLevels);
-                List<Integer> secondIndex = new ArrayList<>(listOfLevels);
-                firstIndex.remove(i);
-                secondIndex.remove(i + 1);
-                return CheckLevels(firstIndex, recursion + 1) || CheckLevels(secondIndex, recursion + 1);
+    public static char[][] buildGraph(){
+        int rows = 140;
+        int cols = 140;
+        char[][] myGrid = new char[rows][cols];
+        List<String> myList = GetLevels();
+        for (int i = 0; i < myList.size(); i++) {
+            String tempStr = myList.get(i);
+            for (int j = 0; j < myList.size(); j++) {
+                myGrid[i][j] = tempStr.charAt(j);
             }
         }
-        return true;
+
+//        for (char[] row : myGrid) {
+//            System.out.println(java.util.Arrays.toString(row));
+//        }
+
+        return myGrid;
     }
 
-
-    public static int CheckReviews() {
+    public static int SearchA(){
+        char[][] grid = buildGraph();
         int count = 0;
-        List<String> myLevels = GetLevels();
-        for (int i = 0; i < myLevels.size(); i++) {
-            List<Integer> listOfLevels = Arrays.stream(myLevels.get(i).split(" "))
-                    .map(Integer :: parseInt).collect(Collectors.toList());
-            if (CheckLevels(listOfLevels, 0)) {
-                count += 1;
+        for (int i = 0; i < 140; i++) {
+            for (int j = 0; j < 140; j++) {
+
+                if (grid[i][j] == 'A') {
+                    if ((i == 0) || (j == 0) || (i==139) || (j==139) ) {
+                        continue;
+                    }
+
+
+                    // MS
+                    // Ms
+                    if ((grid[i-1][j-1] == 'M')
+                            && (grid[i+1][j-1] == 'M')
+                            && (grid[i-1][j+1] == 'S')
+                            && (grid[i+1][j+1] == 'S')) {
+                        count ++;
+                    }
+                    // SM
+                    // SM
+                    else if ((grid[i-1][j-1] == 'S')
+                            && (grid[i+1][j-1] == 'S')
+                            && (grid[i-1][j+1] == 'M')
+                            && (grid[i+1][j+1] == 'M'))  {
+                        count ++;
+                    }
+                    // SS
+                    // MM
+                    else if ((grid[i-1][j-1] == 'S')
+                            && (grid[i+1][j-1] == 'M')
+                            && (grid[i-1][j+1] == 'S')
+                            && (grid[i+1][j+1] == 'M'))  {
+                        count ++;
+                    }
+                    else if ((grid[i-1][j-1] == 'M')
+                            && (grid[i+1][j-1] == 'S')
+                            && (grid[i-1][j+1] == 'M')
+                            && (grid[i+1][j+1] == 'S'))  {
+                        count ++;
+                    } else {
+                        System.out.println("This A is at " + i + " and " + j);
+                    }
+
+                }
+                }
             }
-        }
         return count;
     }
 
+    /*
+    Find each A
+    Then check if the positions around it are M,S,M,S
+    Count this
+
+
+     */
+
 
     public static void main(String[] args) {
-        System.out.println(CheckReviews());
+        System.out.println(SearchA());
     }
 }
