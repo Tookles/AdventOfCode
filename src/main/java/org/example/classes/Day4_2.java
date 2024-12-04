@@ -3,7 +3,7 @@ import org.example.utils.FileManager;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day4Part2 {
+public class Day4_2 {
 
     public static void PrintGrid(char[][] grid) {
         for (char[] row : grid) {
