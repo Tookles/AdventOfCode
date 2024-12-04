@@ -1,13 +1,7 @@
 package org.example.classes;
-
-import org.example.utils.ReadFile;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import org.example.utils.FileManager;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Day4Part2 {
 
@@ -21,7 +15,7 @@ public class Day4Part2 {
         int rows = 140;
         int cols = 140;
         char[][] myGrid = new char[rows][cols];
-        List<String> myList = ReadFile.GetLevels("src/main/java/org/example/inputs/wordsearch");
+        List<String> myList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
         for (int i = 0; i < myList.size(); i++) {
             String rowStr = myList.get(i);
             for (int j = 0; j < myList.size(); j++) {

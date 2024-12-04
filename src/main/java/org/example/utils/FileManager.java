@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ReadFile {
+public class FileManager {
 
-    public static List<String> GetLevels(String filePath){
+    public static List<String> ReadFile(String filePath){
         List<String> fileAsStringList = new ArrayList<>();
         try {
             File myObj = new File(filePath);
