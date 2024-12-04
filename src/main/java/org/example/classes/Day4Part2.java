@@ -1,4 +1,5 @@
-package org.example;
+package org.example.classes;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -6,13 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
-public class Main {
-
+public class Day4Part2 {
     public static List<String> GetLevels(){
         List<String> returnList = new ArrayList<>();
         try {
-            File myObj = new File("src/main/java/org/example/inputs/wordsearch");
+            File myObj = new File("src/main/java/org/example/wordsearch");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String nextLine = myReader.nextLine();
@@ -62,9 +61,5 @@ public class Main {
             }
         }
         return count;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(SearchA());
     }
 }
