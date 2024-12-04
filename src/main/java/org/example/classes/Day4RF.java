@@ -2,6 +2,7 @@ package org.example.classes;
 
 import org.example.utils.FileManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Day4RF {
@@ -34,6 +35,33 @@ public class Day4RF {
         return myGrid;
     }
 
+    public static List<String> GetStringArray(char[][] grid, int i, int j){
+        List<String> stringArray = new ArrayList<>();
+
+        int[][] directions = {
+                {1,0}, {-1, 0} ,
+                {0, 1}, {0, -1},
+                {1, 1}, {-1, -1},
+                {-1, 1}, {1, -1}
+        };
+
+        for (int[] direction : directions) {
+            int dirX = direction[0];
+            int dirY = direction[1]; // indexing the directions array
+
+            StringBuilder charHolder = new StringBuilder();
+
+            for (int step = 1; step <= 3; step++) {
+                int x = i + step * dirX;
+                int y = j + step * dirY;
+                charHolder.append(grid[x][y]);
+            }
+            stringArray.add(charHolder.toString());
+
+        }
+
+        return stringArray;
+    }
 
     public static int SearchX(){
         char[][] grid = BuildGraph();
@@ -42,61 +70,13 @@ public class Day4RF {
             for (int j = 0; j < 150; j++) {
 
                 if (grid[i][j] == 'X') {
-                    String indices = String.valueOf(grid[i+1][j]) + String.valueOf(grid[i+2][j])
-                            + String.valueOf(grid[i+3][j]);
+                    List<String> getIndexWords = GetStringArray(grid, i, j);
 
-                    if (indices.equals("MAS"))  {
-                        count++;
+                    for (String word : getIndexWords) {
+                        if (word.equals("MAS")) {
+                            count++;
+                        }
                     }
-
-                    String indices2 = String.valueOf(grid[i-1][j]) + String.valueOf(grid[i-2][j])
-                            + String.valueOf(grid[i-3][j]);
-
-                    if (indices2.equals("MAS"))  {
-                        count++;
-                    }
-
-                    String indices3 = String.valueOf(grid[i][j+1]) + String.valueOf(grid[i][j+2])
-                            + String.valueOf(grid[i][j+3]);
-
-                    if (indices3.equals("MAS"))  {
-                        count++;
-                    }
-                    String indices4 = String.valueOf(grid[i][j-1]) + String.valueOf(grid[i][j-2])
-                            + String.valueOf(grid[i][j-3]);
-
-                    if (indices4.equals("MAS"))  {
-                        count++;
-                    }
-
-                    String indices5 = String.valueOf(grid[i+1][j+1]) + String.valueOf(grid[i+2][j+2])
-                            + String.valueOf(grid[i+3][j+3]);
-
-                    if (indices5.equals("MAS"))  {
-                        count++;
-                    }
-
-                    String indices6 = String.valueOf(grid[i-1][j-1]) + String.valueOf(grid[i-2][j-2])
-                            + String.valueOf(grid[i-3][j-3]);
-
-                    if (indices6.equals("MAS"))  {
-                        count++;
-                    }
-
-                    String indices7 = String.valueOf(grid[i-1][j+1]) + String.valueOf(grid[i-2][j+2])
-                            + String.valueOf(grid[i-3][j+3]);
-
-                    if (indices7.equals("MAS"))  {
-                        count++;
-                    }
-
-                    String indices8 = String.valueOf(grid[i+1][j-1]) + String.valueOf(grid[i+2][j-2])
-                            + String.valueOf(grid[i+3][j-3]);
-
-                    if (indices8.equals("MAS"))  {
-                        count++;
-                    }
-
 
                 }
             }
