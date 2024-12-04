@@ -12,13 +12,13 @@ public class Day4Part2 {
     }
 
     public static char[][] BuildGraph(){
-        int rows = 140;
-        int cols = 140;
-        char[][] myGrid = new char[rows][cols];
         List<String> myList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
-        for (int i = 0; i < myList.size(); i++) {
+        int rows = myList.get(0).length(); // assumes all rows are the same length
+        int cols = myList.size();;
+        char[][] myGrid = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
             String rowStr = myList.get(i);
-            for (int j = 0; j < myList.size(); j++) {
+            for (int j = 0; j < cols; j++) {
                 myGrid[i][j] = rowStr.charAt(j);
             }
         }
