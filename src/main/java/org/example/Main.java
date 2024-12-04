@@ -48,10 +48,7 @@ public class Main {
         }
 
         for (int i = 0; i < (listOfLevels.size() - 1); i++ ) {
-            if ( listofDiff.contains( listOfLevels.get(i) - listOfLevels.get(i + 1) )) {
-                // are true
-            }
-            else {
+            if ( ! listofDiff.contains( listOfLevels.get(i) - listOfLevels.get(i + 1) )) {
                 List<Integer> firstIndex = new ArrayList<>(listOfLevels);
                 List<Integer> secondIndex = new ArrayList<>(listOfLevels);
                 firstIndex.remove(i);
