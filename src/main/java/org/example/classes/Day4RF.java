@@ -15,10 +15,7 @@ public class Day4RF {
 
     public static char[][] BuildGraph(){
         List<String> myList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
-        int rows = 150;
-        int cols = 150;
-        char[][] myGrid = new char[rows][cols];
-
+        char[][] myGrid = new char[150][150];
         for (int i = 0; i < 150; i++) {
             if ((i < 5) || (i >= 145)) {
                 for (int j = 0; j < 150; j++) {
@@ -31,7 +28,6 @@ public class Day4RF {
             }
             }
         }
-
         return myGrid;
     }
 
@@ -72,5 +68,5 @@ public class Day4RF {
             }
         }
         return count;
-}
+    }
 }
