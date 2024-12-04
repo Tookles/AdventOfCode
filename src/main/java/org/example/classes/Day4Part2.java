@@ -13,7 +13,7 @@ public class Day4Part2 {
 
     public static char[][] BuildGraph(){
         List<String> myList = FileManager.ReadFile("src/main/java/org/example/inputs/wordsearch");
-        int rows = myList.get(0).length(); // assumes all rows are the same length
+        int rows = myList.getFirst().length(); // assumes all rows are the same length
         int cols = myList.size();;
         char[][] myGrid = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
