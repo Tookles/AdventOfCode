@@ -33,6 +33,15 @@ public class Day5 {
         return printingJobArray;
     }
 
+    public static List<Integer> FixList(int numb, List<Integer> arrayToFix, int iindex, int inumber){
+        int indexOfNumb = arrayToFix.indexOf(numb);
+        List<Integer> newArray = new ArrayList<>(arrayToFix);
+        newArray.remove(iindex);
+        newArray.add(indexOfNumb, inumber);
+        return newArray;
+    }
+// several checks
+
     public static boolean IsPrintingJobValid(List<Integer> job) {
         HashMap<Integer, List<Integer>> orderDict = ParsePageOrders();
         List<Integer> numbersChecked = new ArrayList<>();
@@ -51,13 +60,38 @@ public class Day5 {
     }
 
 
+    public static List<Integer> SortJob(List<Integer> job) {
+        HashMap<Integer, List<Integer>> orderDict = ParsePageOrders();
+        List<Integer> numbersChecked = new ArrayList<>();
+        for (int i = 0; i < job.size(); i++) {
+            if (orderDict.containsKey(job.get(i))) {
+                List<Integer> numbersBefore = orderDict.get(job.get(i));
+                for (Integer numb : numbersBefore) {
+                    if (numbersChecked.contains(numb)) {
+                        List<Integer> fixed = FixList(numb, job, i, job.get(i));
+                        return fixed;
+                    }
+                }
+            }
+            numbersChecked.add(job.get(i));
+        }
+        return null;
+    }
+
     public static int CountPrintingJobs() {
         int count = 0;
         List<List<Integer>> printingJobs = ParsePrintingJobs();
         for (List<Integer> job : printingJobs) {
-            if (IsPrintingJobValid(job)) {
-                double listSize = job.size();
-                count += job.get((int)Math.floor(listSize / 2));
+            if (!IsPrintingJobValid(job)) {
+                List<Integer> swap = SortJob(job);
+                if (swap == null) {
+                    continue;
+                }
+                while (!IsPrintingJobValid(swap)) {
+                    swap = SortJob(swap);
+                }
+                double listSize = swap.size();
+                count += swap.get((int)Math.floor(listSize / 2));
             }
         }
         return count;
